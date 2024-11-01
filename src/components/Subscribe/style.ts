@@ -45,7 +45,7 @@ const SubscribeSubtitle = styled.p`
   margin-bottom: 52px;
 `;
 
-const SubscribeForm = styled.div`
+const SubscribeForm = styled.form`
   max-width: 642px;
   width: 100%;
   padding: 5px;
@@ -82,6 +82,8 @@ const SubscribeButton = styled.button`
 
   border: none;
   border-radius: 20px;
+
+  cursor:pointer;
 
   color: white;
   background-color: ${Colors.ORANGE};

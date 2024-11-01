@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { bookApi } from "../../services/bookService";
+import { BookServices } from "../../services/bookService";
 import { IBookApi, IBookDetailsApi, INewBooksApi } from "../../services/types";
 
 const initialState: IBookApi = {
@@ -27,10 +27,13 @@ const initialState: IBookApi = {
   },
 };
 
+const bookApi = BookServices()
+const { getNewBooks, getBookDetails, getBooksBySearch } = bookApi
+
 export const featchBooskItems = createAsyncThunk<INewBooksApi>(
   "books/featchBooskItems",
   async () => {
-    const newBooks = await bookApi.getNewBooks();
+    const newBooks = await getNewBooks();
     return newBooks;
   }
 );
@@ -38,15 +41,16 @@ export const featchBooskItems = createAsyncThunk<INewBooksApi>(
 export const fetchBookDetails = createAsyncThunk<IBookDetailsApi, string>(
   "books/fetchBookDetails",
   async (id) => {
-    const bookDetails = await bookApi.getBookDetails(id);
+    const bookDetails = await getBookDetails(id);
     return bookDetails;
   }
 );
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchBooksBySearch = createAsyncThunk<any, any>(
   "books/fetchBooksBySearch",
   async ({ title, page }) => {
-    const rezultBooks = await bookApi.getBooksBySearch(title, page);
+    const rezultBooks = await getBooksBySearch(title, page);
     return rezultBooks;
   }
 );

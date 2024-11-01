@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 import {
   getBooks,
-  getBooksError,
   getBooksStatus,
 } from "../../store/selectors/booksSelector";
 import { featchBooskItems } from "../../store/slices/bookSlice";
@@ -19,10 +18,9 @@ import { Bookshelf } from "../BookShelf/Bookshelf";
 
 export const ListHome = () => {
   const books = useAppSelector(getBooks);
-  console.log(books)
   const status = useAppSelector(getBooksStatus);
-  const error = useAppSelector(getBooksError);
 
+  //const error = useAppSelector(getBooksError);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -53,7 +51,6 @@ export const ListHome = () => {
   return (
     <StyledBookList>
       {books.books.map((book) => {
-        console.log("test")
         return <ListItem key={book.isbn13} book={book} />;
       })}
     </StyledBookList>

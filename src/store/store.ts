@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./slices/userSlice";
 import bookSlice from "./slices/bookSlice";
 import cartSlice from "./slices/cartSlice";
+import reducer from "./slices/userSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,8 @@ const store = configureStore({
     cart: cartSlice,
   },
 });
+
+console.log(reducer)
 
 export default store;
 

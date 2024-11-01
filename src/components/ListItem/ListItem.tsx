@@ -20,6 +20,7 @@ interface IBook {
 
 export const ListItem = ({ book }: IBook) => {
   const dispatch = useAppDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFavorite = (book: any) => {
     dispatch(setFavorite(book));
   };
@@ -29,7 +30,7 @@ export const ListItem = ({ book }: IBook) => {
       <HeartContainer onClick={() => handleFavorite(book)}>
         <Heart />
       </HeartContainer>
-      <StyledLink to={`/react-bookstore/books/${book.isbn13}`}>
+      <StyledLink to={`/books/${book.isbn13}`}>
         <BookImage src={book.image} alt={book.title} />
         <BookTitle>{book.title}</BookTitle>
         <BookSubtitle>{book.subtitle}</BookSubtitle>

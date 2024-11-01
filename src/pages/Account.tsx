@@ -11,7 +11,7 @@ export const Account = () => {
 
   const navigate = useNavigate();
   const handleBack = () => {
-    navigate(-1);
+    navigate(routes.HOME);
   };
 
   if (isAuthorized) {

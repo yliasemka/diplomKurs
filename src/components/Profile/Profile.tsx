@@ -18,6 +18,7 @@ export const Profile = () => {
   const dispatch = useAppDispatch();
   const [isChange, setIsChange] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
     dispatch(setUserName(data.name));
     dispatch(setUser(data.email));

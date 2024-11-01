@@ -27,20 +27,36 @@ import {
   Preview,
   Tabs,
 } from "./styles";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../routes/routes";
 
 interface IDetailsBook {
   books: IBookDetailsApi;
 }
 
 export const DetailedBook = ({ books }: IDetailsBook) => {
+  const navigate = useNavigate();
+  const { isAuthorized } = useSelector(({ user }: RootState) => user);
   const dispatch = useAppDispatch();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFavorite = (books: any) => {
-    dispatch(setFavorite(books));
+    if (isAuthorized) {
+      dispatch(setFavorite(books))
+    } else  {
+      navigate(routes.SIGNUP);
+    }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleCart = (books: any) => {
+    if (isAuthorized) {
     dispatch(setCart(books));
+    } else {
+      navigate(routes.SIGNUP);
+    }
   };
 
   const id = useId();

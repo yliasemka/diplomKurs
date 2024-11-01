@@ -1,28 +1,58 @@
-import axios from "axios";
 import { IBookDetailsApi, INewBooksApi, ISearchBookApi } from "./types";
 
-class BookService {
-  private readonly API_URL = "https://api.itbook.store/1.0/";
-  private api = axios.create({
-    baseURL: this.API_URL,
-  });
+export const BookServices = () => {
+  const API_URL = "https://api.itbook.store/1.0/";
 
-  public async getNewBooks(): Promise<any> {
-    const { data } = await this.api.get<INewBooksApi>("/new");
-    return data;
-  }
-  public async getBookDetails(isbn: string): Promise<IBookDetailsApi> {
-    const { data } = await this.api.get<IBookDetailsApi>(`/books/${isbn}`);
-    return data;
-  }
-  public async getBooksBySearch(
-    title: string,
-    page: string
-  ): Promise<ISearchBookApi> {
-    const { data } = await this.api.get<ISearchBookApi>(
-      `/search/${title}/${page}`
-    );
-    return data;
-  }
-}
-export const bookApi = new BookService();
+  const getNewBooks = async (): Promise<INewBooksApi>=> {
+    try {
+      const response = await fetch(`${API_URL}/new`, {
+        method: "GET",
+        mode: "cors",
+      });
+      if (!response.ok) {
+        throw new Error(`Ошибка HTTP: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Ошибка при получении новых книг:", error);
+      throw error;
+    }
+  };
+
+  const getBookDetails = async (isbn: string): Promise<IBookDetailsApi> => {
+    try {
+      const response = await fetch(`${API_URL}/books/${isbn}`, {
+        method: "GET",
+        mode: "cors",
+      });
+      if (!response.ok) {
+        throw new Error(`Ошибка HTTP: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(`Ошибка при получении деталей книги ISBN ${isbn}:`, error);
+      throw error;
+    }
+  };
+
+  const getBooksBySearch = async (title: string, page: string): Promise<ISearchBookApi> => {
+    try {
+      const response = await fetch(`${API_URL}/search/${title}/${page}`, {
+        method: "GET",
+        mode: "cors",
+      });
+      if (!response.ok) {
+        throw new Error(`Ошибка HTTP: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(`Ошибка при поиске книги по названию ${title}:`, error);
+      throw error;
+    }
+  };
+
+  return { getNewBooks, getBookDetails, getBooksBySearch };
+};
